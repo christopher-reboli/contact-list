@@ -9,29 +9,57 @@
 	</head>
 	<body>
 		<main>
-			<form id="contactForm">
-				<input type="text" placeholder="Name" name="name" required />
-				<input type="tel" placeholder="Phone" name="phone" required />
-				<input type="text" placeholder="Mail" name="mail" required />
-				<input type="text" placeholder="City" name="city" required />
-				<button>Add contact</button>
-			</form>
-			<div class="contacts"></div>
+			<div class="container">
+				<form id="contactForm">
+					<label for="name">Name</label>
+					<input
+						type="text"
+						placeholder="Name"
+						name="name"
+						autofocus
+						required
+					/>
+					<label for="phone">Phone</label>
+					<input
+						type="tel"
+						placeholder="(DDD) 91234-5678"
+						name="phone"
+						required
+					/>
+					<label for="mail">Mail</label>
+					<input type="email" placeholder="Mail" name="mail" required />
+					<label for="City">City</label>
+					<input type="text" placeholder="City" name="city" required />
+					<button>Add contact</button>
+				</form>
+				<input
+					type="text"
+					id="searchInput"
+					onkeyup="searchContact()"
+					placeholder="Search..."
+				/>
+				<!-- <table class="contacts"></table> -->
+				<table id="contacts" class="contacts">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Phone</th>
+							<th>E-mail</th>
+							<th>City</th>
+							<th>Delete?</th>
+						</tr>
+					</thead>
+					<tbody id="contactList" class="contactList">
+						<!-- <tr>
+							<td>Example</td>
+							<td>1111-1111</td>
+							<td>example@example.com</td>
+							<td>Example City</td>
+						</tr> -->
+					</tbody>
+				</table>
+			</div>
 		</main>
-		<!-- <table id="contacts" class="contacts">
-			<tr>
-				<th>Name</th>
-				<th>Phone</th>
-				<th>E-mail</th>
-				<th>City</th>
-			</tr>
-			<tr>
-				<td>Example</td>
-				<td>1111-1111</td>
-				<td>example@example.com</td>
-				<td>Example City</td>
-			</tr>
-		</table> -->
 		<script src="script.js"></script>
 	</body>
 </html>

@@ -1,11 +1,10 @@
 // DOM Elements
 const contactForm = document.getElementById("contactForm");
-const contactsContainer = document.querySelector(".contacts");
+const contactsContainer = document.querySelector(".contactList");
 const nameInput = contactForm["name"];
 const phoneInput = contactForm["phone"];
 const mailInput = contactForm["mail"];
 const cityInput = contactForm["city"];
-let deleteDiv;
 let deleteIndex = [];
 
 const contacts = JSON.parse(localStorage.getItem("contacts")) || [];
@@ -34,29 +33,44 @@ const addContact = (name, phone, mail, city) => {
 // }
 
 const createContactElement = ({ name, phone, mail, city }) => {
-	const contactDiv = document.createElement("div");
+	const contactDiv = document.createElement("tr");
 	contactDiv.classList.add("contact");
-	const contactName = document.createElement("h2");
-	const contactAge = document.createElement("p");
-	const contactMail = document.createElement("p");
-	const contactCity = document.createElement("p");
+	const contactName = document.createElement("td");
+	const contactPhone = document.createElement("td");
+	const contactPhoneLink = document.createElement("a");
+	const contactMail = document.createElement("td");
+	const contactCity = document.createElement("td");
+
 	// const contactDelete = document.createElement("button");
 
-	contactName.innerText = "Name: " + name;
-	contactAge.innerText = "Phone: " + phone;
-	contactMail.innerText = "Mail: " + mail;
-	contactCity.innerText = "City: " + city;
-	// contactDelete.innerText = "Delete contact";
-	// contactDelete.onclick = deleteContact;
+	contactName.innerText = name;
+	contactPhoneLink.innerText = phone;
+	contactPhoneLink.href = "https://wa.me/55" + phone;
+	contactPhoneLink.target = "_blank";
+	contactPhone.appendChild(contactPhoneLink);
+	contactMail.innerText = mail;
+	contactCity.innerText = city;
 
-	contactDiv.append(contactName, contactAge, contactMail, contactCity);
+	contactDiv.append(contactName, contactPhone, contactMail, contactCity);
+
+	var td = document.createElement("TD");
+	var txt = document.createTextNode("\u00D7");
+	td.className = "close";
+	td.appendChild(txt);
+	contactDiv.appendChild(td);
+
 	contactsContainer.appendChild(contactDiv);
-	deleteDiv = contactDiv;
 
-	contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
+	// for (i = 0; i < close.length; i++) {
+	// 	close[i].onclick = function () {
+	// 		var div = this.parentElement;
+	// 		div.style.display = "none";
+	// 	};
+	// }
+
+	// contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
 };
-
-contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
+// contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
 
 contacts.forEach(createContactElement);
 
@@ -76,18 +90,56 @@ contactForm.onsubmit = (e) => {
 	phoneInput.value = "";
 	mailInput.value = "";
 	cityInput.value = "";
+
+	nameInput.focus();
+
+	close = document.getElementsByClassName("close");
+	console.log(close.length - 1);
+	var i = 0;
+	for (i = 0; i < close.length; i++) {
+		deleteIndex.push(i);
+		let index = i;
+		console.log("Before click: " + index);
+		close[i].onclick = function () {
+			var div = this.parentElement;
+			console.log(index);
+			contacts.splice(index, 1);
+			div.remove();
+
+			deleteIndex = [];
+
+			localStorage.setItem("contacts", JSON.stringify(contacts));
+
+			// contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
+			redefineCloses();
+		};
+	}
+
+	// createCloseButton();
+	// redefineCloses();
 };
 
 // Create a "close" button and append it to each list item
-var contactList = document.querySelectorAll(".contact");
-var i;
-for (i = 0; i < contactList.length; i++) {
-	var span = document.createElement("SPAN");
-	var txt = document.createTextNode("\u00D7");
-	span.className = "close";
-	span.appendChild(txt);
-	contactList[i].appendChild(span);
+function createCloseButton() {
+	var contactList = document.querySelectorAll(".contact");
+	var i;
+	for (i = 0; i < contactList.length; i++) {
+		// console.log(contactList[i].children);
+		if (contactList[i].lastChild.className == "close") {
+			console.log("Already has a close button");
+			return;
+		}
+		var td = document.createElement("TD");
+		var txt = document.createTextNode("\u00D7");
+		td.className = "close";
+		td.appendChild(txt);
+		contactList[i].appendChild(td);
+		// console.log(contactList[i].lastChild.className);
+		// console.log(contactList[i].children);
+	}
 }
+
+createCloseButton();
 
 // Click on a close button to hide the current list item
 var close = document.getElementsByClassName("close");
@@ -115,10 +167,11 @@ for (i = 0; i < close.length; i++) {
 
 		localStorage.setItem("contacts", JSON.stringify(contacts));
 
-		contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
+		// contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
 		redefineCloses();
 	};
 }
+
 function redefineCloses() {
 	close = document.getElementsByClassName("close");
 	i = 0;
@@ -135,9 +188,28 @@ function redefineCloses() {
 
 			localStorage.setItem("contacts", JSON.stringify(contacts));
 
-			contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
+			// contactsContainer.style.display = contacts.length == 0 ? "none" : "flex";
 			redefineCloses();
 		};
+	}
+}
+
+function searchContact() {
+	var input, filter, table, tr, i, ii;
+	input = document.getElementById("searchInput");
+	filter = input.value.toUpperCase();
+	table = document.getElementById("contacts");
+	tr = table.querySelectorAll("tbody tr");
+	for (i = 0; i < tr.length; i++) {
+		var tds = tr[i].getElementsByTagName("td");
+		var found = false;
+		for (ii = 0; ii < tds.length && !found; ii++) {
+			if (tds[ii].textContent.toUpperCase().indexOf(filter) > -1) {
+				found = true;
+				break;
+			}
+		}
+		tr[i].style.display = found ? "" : "none";
 	}
 }
 
