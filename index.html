@@ -5,61 +5,211 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Contact List</title>
-		<link rel="stylesheet" href="style.css" />
+
+		<link rel="stylesheet" href="./assets/index.81aacd9f.css" />
 	</head>
-	<body>
+	<body class="bg-gray-900">
 		<main>
-			<div class="container">
-				<form id="contactForm">
-					<label for="name">Name</label>
-					<input
-						type="text"
-						placeholder="Name"
-						name="name"
-						autofocus
-						required
-					/>
-					<label for="phone">Phone</label>
-					<input
-						type="tel"
-						placeholder="(DDD) 91234-5678"
-						name="phone"
-						required
-					/>
-					<label for="mail">Mail</label>
-					<input type="email" placeholder="Mail" name="mail" required />
-					<label for="City">City</label>
-					<input type="text" placeholder="City" name="city" required />
-					<button>Add contact</button>
-				</form>
-				<input
-					type="text"
-					id="searchInput"
-					onkeyup="searchContact()"
-					placeholder="Search..."
-				/>
-				<!-- <table class="contacts"></table> -->
-				<table id="contacts" class="contacts">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Phone</th>
-							<th>E-mail</th>
-							<th>City</th>
-							<th>Delete?</th>
-						</tr>
-					</thead>
-					<tbody id="contactList" class="contactList">
-						<!-- <tr>
-							<td>Example</td>
-							<td>1111-1111</td>
-							<td>example@example.com</td>
-							<td>Example City</td>
-						</tr> -->
-					</tbody>
-				</table>
+			<div
+				class="mx-auto mt-6 mb-6 px-6 py-4 lg:container lg:grid lg:grid-cols-4 lg:gap-6"
+			>
+				<div class="lg:order-2 lg:col-span-1 lg:block">
+					<form
+						class="space-y-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0 lg:block lg:space-y-4"
+						id="contactForm"
+					>
+						<div>
+							<label class="hidden" for="name">Name</label>
+							<input
+								class="w-full rounded-md bg-gray-800 px-4 py-2 text-gray-400 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+								type="text"
+								placeholder="Name"
+								name="name"
+								autocomplete="off"
+								autofocus
+								required
+							/>
+						</div>
+						<div>
+							<label class="hidden" for="phone">Phone</label>
+							<input
+								class="w-full rounded-md bg-gray-800 px-4 py-2 text-gray-400 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+								type="tel"
+								placeholder="(123) 91234-5678"
+								name="phone"
+								autocomplete="off"
+								required
+							/>
+						</div>
+						<div>
+							<label class="hidden" for="mail">Mail</label>
+							<input
+								class="w-full rounded-md bg-gray-800 px-4 py-2 text-gray-400 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+								type="email"
+								placeholder="Mail"
+								name="mail"
+								autocomplete="off"
+								required
+							/>
+						</div>
+						<div>
+							<label class="hidden" for="City">City</label>
+							<input
+								class="w-full rounded-md bg-gray-800 px-4 py-2 text-gray-400 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+								type="text"
+								placeholder="City"
+								name="city"
+								autocomplete="off"
+								required
+							/>
+						</div>
+						<button
+							class="col-span-2 col-start-2 col-end-2 mt-4 w-full rounded-md bg-blue-600 py-2 px-4 font-semibold text-white transition hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-gray-900 active:bg-blue-700"
+						>
+							Add contact
+						</button>
+					</form>
+				</div>
+				<div class="mt-12 space-y-4 lg:order-1 lg:col-span-3 lg:mt-0">
+					<div
+						class="relative flex items-center text-gray-600 focus-within:text-gray-400"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 20 20"
+							fill="currentColor"
+							class="pointer-events-none absolute ml-3 h-5 w-5"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+						<input
+							class="w-full rounded-md bg-gray-800 py-2 pr-4 pl-10 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
+							type="text"
+							id="searchInput"
+							onkeyup="searchContact()"
+							placeholder="Search contact..."
+						/>
+					</div>
+					<!-- <table class="contacts"></table> -->
+					<div class="overflow-auto xl:overflow-visible">
+						<table id="contacts" class="w-full divide-y divide-gray-800">
+							<thead>
+								<tr>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Name
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Phone
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										E-mail
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										City
+									</th>
+									<th
+										class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Delete?
+									</th>
+								</tr>
+							</thead>
+							<tbody id="contactList" class="contactList divide-y divide-gray-800">
+								<!-- <tr>
+									<td
+										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+									>
+										Example
+									</td>
+									<td
+										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+									>
+										<a class="transition hover:text-gray-400" href="#">1111-1111</a>
+									</td>
+									<td
+										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+									>
+										example@example.com
+									</td>
+									<td
+										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
+									>
+										Example City
+									</td>
+								</tr> -->
+							</tbody>
+						</table>
+					</div>
+					<!-- TEST TABLE -->
+					<!-- <div class="xl:hidden">
+						<table id="contacts" class="w-full divide-y divide-gray-800">
+							<thead>
+								<tr>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Name
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Phone
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										E-mail
+									</th>
+									<th
+										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										City
+									</th>
+									<th
+										class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-400"
+									>
+										Delete?
+									</th>
+								</tr>
+							</thead>
+							<tbody id="contactList" class="contactList divide-y divide-gray-800">
+								<tr>
+									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
+										Example
+									</td>
+									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
+										<a class="transition hover:text-gray-400" href="#">1111-1111</a>
+									</td>
+									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
+										example@example.com
+									</td>
+									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
+										Example City
+									</td>
+									<td
+										class="whitespace-nowrap px-6 py-4 text-center text-sm text-gray-400"
+									>
+										x
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div> -->
+				</div>
 			</div>
 		</main>
-		<script src="script.js"></script>
+		<script src="./script.js"></script>
 	</body>
 </html>
