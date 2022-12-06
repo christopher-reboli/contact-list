@@ -66,6 +66,7 @@ const createContactElement = ({ name, phone, mail, city }) => {
 
 	contactName.innerText = name;
 	contactPhoneLink.innerText = phone;
+	phone = phone.replace(/\D/g, "");
 	contactPhoneLink.href = "https://wa.me/55" + phone;
 	contactPhoneLink.target = "_blank";
 	contactPhone.appendChild(contactPhoneLink);
@@ -117,15 +118,12 @@ contactForm.onsubmit = (e) => {
 	nameInput.focus();
 
 	close = document.getElementsByClassName("close");
-	console.log(close.length - 1);
 	var i = 0;
 	for (i = 0; i < close.length; i++) {
 		deleteIndex.push(i);
 		let index = i;
-		console.log("Before click: " + index);
 		close[i].onclick = function () {
 			var div = this.parentElement;
-			console.log(index);
 			contacts.splice(index, 1);
 			div.remove();
 
@@ -144,7 +142,6 @@ function createCloseButton() {
 	var i;
 	for (i = 0; i < contactList.length; i++) {
 		if (contactList[i].lastChild.classList.contains("close")) {
-			console.log("Already has a close button");
 			return;
 		}
 		var td = document.createElement("TD");
@@ -161,12 +158,10 @@ createCloseButton();
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
-	// console.log(i);
 	deleteIndex.push(i);
 	let index = deleteIndex[i];
 	close[i].onclick = function () {
 		var div = this.parentElement;
-		console.log(deleteIndex[index]);
 		contacts.splice(deleteIndex[index], 1);
 		div.remove();
 
@@ -186,7 +181,6 @@ function redefineCloses() {
 		let index = deleteIndex[i];
 		close[i].onclick = function () {
 			var div = this.parentElement;
-			console.log(deleteIndex[index]);
 			contacts.splice(deleteIndex[index], 1);
 			div.remove();
 
@@ -216,4 +210,30 @@ function searchContact() {
 		}
 		tr[i].style.display = found ? "" : "none";
 	}
+}
+
+function debounce(func, timeout = 300) {
+	let timer;
+	return (...args) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => {
+			func.apply(this, args);
+		}, timeout);
+	};
+}
+
+const processChanges = debounce(() => searchContact());
+
+function nameRegex(name) {
+	name = name.replace(/[^a-zA-Z\s]/g, "");
+	nameInput.value = name;
+	return name;
+}
+
+function phoneRegex(phone) {
+	phone = phone.replace(/\D/g, "");
+	phone = phone.replace(/^(\d{2})(\d)/g, "($1) $2");
+	phone = phone.replace(/(\d)(\d{4})$/, "$1-$2");
+	phoneInput.value = phone;
+	return phone;
 }

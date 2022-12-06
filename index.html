@@ -26,6 +26,7 @@
 								placeholder="Name"
 								name="name"
 								autocomplete="off"
+								onkeyup="nameRegex(this.value)"
 								autofocus
 								required
 							/>
@@ -38,6 +39,9 @@
 								placeholder="(123) 91234-5678"
 								name="phone"
 								autocomplete="off"
+								onkeyup="phoneRegex(this.value)"
+								minlength="14"
+								maxlength="15"
 								required
 							/>
 						</div>
@@ -90,11 +94,11 @@
 							class="w-full rounded-md bg-gray-800 py-2 pr-4 pl-10 shadow-md transition placeholder:text-gray-600 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600"
 							type="text"
 							id="searchInput"
-							onkeyup="searchContact()"
+							autocomplete="off"
+							onkeyup="processChanges()"
 							placeholder="Search contact..."
 						/>
 					</div>
-					<!-- <table class="contacts"></table> -->
 					<div class="overflow-auto xl:overflow-visible">
 						<table id="contacts" class="w-full divide-y divide-gray-800">
 							<thead>
@@ -126,87 +130,12 @@
 									</th>
 								</tr>
 							</thead>
-							<tbody id="contactList" class="contactList divide-y divide-gray-800">
-								<!-- <tr>
-									<td
-										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-									>
-										Example
-									</td>
-									<td
-										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-									>
-										<a class="transition hover:text-gray-400" href="#">1111-1111</a>
-									</td>
-									<td
-										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-									>
-										example@example.com
-									</td>
-									<td
-										class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900"
-									>
-										Example City
-									</td>
-								</tr> -->
-							</tbody>
+							<tbody
+								id="contactList"
+								class="contactList divide-y divide-gray-800"
+							></tbody>
 						</table>
 					</div>
-					<!-- TEST TABLE -->
-					<!-- <div class="xl:hidden">
-						<table id="contacts" class="w-full divide-y divide-gray-800">
-							<thead>
-								<tr>
-									<th
-										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
-									>
-										Name
-									</th>
-									<th
-										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
-									>
-										Phone
-									</th>
-									<th
-										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
-									>
-										E-mail
-									</th>
-									<th
-										class="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-gray-400"
-									>
-										City
-									</th>
-									<th
-										class="px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-gray-400"
-									>
-										Delete?
-									</th>
-								</tr>
-							</thead>
-							<tbody id="contactList" class="contactList divide-y divide-gray-800">
-								<tr>
-									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
-										Example
-									</td>
-									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
-										<a class="transition hover:text-gray-400" href="#">1111-1111</a>
-									</td>
-									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
-										example@example.com
-									</td>
-									<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-400">
-										Example City
-									</td>
-									<td
-										class="whitespace-nowrap px-6 py-4 text-center text-sm text-gray-400"
-									>
-										x
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div> -->
 				</div>
 			</div>
 		</main>
